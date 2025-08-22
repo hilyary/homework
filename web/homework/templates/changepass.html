@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/css/login.css">
+    <!-- 导入样式表 -->
+    <link rel="shortcut icon" href="/static/img/logo.ico">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修改用户密码</title>
+</head>
+<body>
+    <div class="login-box">
+        <a>
+        <h2>修改当前用户密码<h2>
+        </a>
+        <form method="post" action="#" id="chpsForm">
+            {% csrf_token %}
+          <div class="user-box">
+            <input type="text" name="old_password" required="">
+            <label>原密码：</label>
+          </div>
+          <div class="user-box">
+            <input type="password" name="new_password" required="">
+            <label>新密码：</label>
+          </div>
+          <div class="user-box">
+            <input type="password" name="two_new_password" required="">
+            <label>重复新密码：</label>
+          </div>
+          <a onclick="document:chpsForm.submit()">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            修改
+          </a>
+          <a href="/index/yhym/">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            返回主页
+          </a>
+        </form>
+        <div class="err">
+        <span style="color: #03e9f4;font-size: 6pt;">{{ errMsg }}</span>
+        <!-- 上面这个是前端显示后端设置的验证码错误信息-->
+    </div> 
+      </div>
+</body>
+</html>

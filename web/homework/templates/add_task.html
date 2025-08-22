@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card mt-5">
+        <div class="card-body">
+          <h3 class="card-title mb-4">创建任务</h3>
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="task_name">任务名字:</label>
+              <input type="text" class="form-control" id="task_name" name="task_name"  placeholder="例如：&#10;云计算2132-第十七周-青年大学习|云计算2132-第一次-Python Web作业">
+            </div>
+            <div class="form-group">
+              <label for="creator">创建人:</label>
+              <input type="text" class="form-control" id="creator" name="creator" value="{{ request.user.username }}" readonly>
+            </div>
+            <div class="form-group mt-4">
+              <div class="row justify-content-center">
+                <div class="col-md-6 text-center pr-1">
+                  <button type="submit" class="btn btn-primary btn-block">保存</button>
+                </div>
+                <div class="col-md-6 text-center pl-1">
+                  <a href="{% url 'rwlb' %}" class="btn btn-secondary btn-block">返回</a>
+                </div>
+              </div>
+            </div>
+          </form>
+          {% if error_message %}
+          <div class="alert alert-danger mt-4" role="alert">
+            {{ error_message }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

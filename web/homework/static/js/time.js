@@ -1,0 +1,9 @@
+var d = new Date();
+var year = d.getFullYear(); // 获取年份
+var month = d.getMonth() + 1; // 获取月份，需要加1
+var day = d.getDate(); // 获取日份
+var hours = d.getHours(); // 获取小时数
+var minutes = d.getMinutes(); // 获取分钟数
+var seconds = d.getSeconds(); // 获取秒数
+var timeString = year + "年" + month + "月" + day + "日 " + hours + ":" + minutes + ":" + seconds;
+document.getElementById("showtime").innerHTML = timeString;

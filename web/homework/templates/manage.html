@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center h-100" style="text-align: center">
+  <div class="card shadow-lg p-5 mb-5 bg-body rounded">
+    <div class="card-header bg-white text-center py-0 mb-4">
+      <h1 class="display-4 py-4 text-primary">一站式任务收集平台</h1>
+    </div>
+    <div class="card-body py-0">
+      <div class="d-flex flex-column align-items-center">
+        <h3 class="fw-bold mb-4 text-dark">尊敬的用户 {{ user.first_name }}</h3>
+        <p class="fw-bold mb-4 text-dark">您的用户名为：{{ user.username }}，欢迎登录！</p>
+        <p class="fw-bold mb-4 text-dark">您于 {{ user.last_login }} 成功登录平台！</p>
+        <p class="fw-bold mb-4 text-dark">现在可以开始使用本平台了：</p>
+        <div class="d-flex justify-content-center">
+          <a href="{% url 'yhym' %}" class="btn btn-secondary me-3" style="padding: 10px 20px; background-color: #007bff; color: #fff; border-radius: 5px; text-decoration: none; font-size: 16px;">管理用户信息</a>
+          <a href="{% url 'rwlb' %}" class="btn btn-success ms-3" style="padding: 10px 20px; background-color: #28a745; color: #fff; border-radius: 5px; text-decoration: none; font-size: 16px;">管理收集任务</a>
+        </div>
+        <hr class="my-4">
+        {% if user.last_name %}
+          <p class="text-muted mt-3 mb-0">个性签名：</p>
+          <p class="lead text-secondary">{{ user.last_name }}</p>
+        {% else %}
+          <p class="text-muted mt-3 mb-0">您当前还没有书写自己的个性签名</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

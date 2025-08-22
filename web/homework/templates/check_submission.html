@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}查看未提交{% endblock %}
+
+{% block content %}
+    <style>
+        .card {
+            width: 80%;
+            margin: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        .card-header {
+            background-color: #a3a7e4;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .card-body {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 10px;
+        }
+        .list-group-item {
+            border: none;
+            padding: 5px;
+            margin: 5px;
+            width: 200px;
+            text-align: center;
+            background-color: #f8b195;
+            color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ task.name }} 未提交名单</h1>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12 text-center">
+                <a href="{% url 'list_tasks' %}" class="btn btn-primary">返回任务列表</a>
+                <a href="{% url 'upload_work_jilu' task.id %}" class="btn btn-primary">查看已交名单</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {% if missing_submissions %}
+                    <div class="card">
+                        <div class="card-header">
+                            未提交名单（{{ missing_submissions|length }}人）
+                        </div>
+                        <div class="card-body">
+                            {% for match in missing_submissions %}
+                                <div class="list-group-item">{{ match.name_pattern }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <br><br><br><br><br><br><br>
+                    <h1 style="text-align: center">所有人都已提交</h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

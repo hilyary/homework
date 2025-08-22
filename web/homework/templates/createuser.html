@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/css/login.css">
+    <!-- 导入样式表 -->
+    <link rel="shortcut icon" href="/static/img/logo.ico">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建用户</title>
+</head>
+<body>
+    <div class="login-box">
+        <a>
+        <h2>创建用户<h2>
+        </a>
+        <form method="post" action="#" id="chpsForm">
+            {% csrf_token %}
+          <div class="user-box">
+            <input type="text" name="uName" required="">
+            <label>用户名</label>
+          </div>
+          <div class="user-box">
+            <input type="password" name="pwd1" required="">
+            <label>密码：</label>
+          </div>
+          <div class="user-box">
+            <input type="password" name="pwd2" required="">
+            <label>确认密码：</label>
+          </div>
+          <div class="user-box">
+            <input type="text" name="email" required="">
+            <label>邮箱：</label>
+          </div>
+          <div class="user-box">
+            <select name="role" id="role">
+              <option value="0">普通用户</option>
+              <option value="1">管理员</option>
+            </select>
+          </div>
+          <a onclick="document:chpsForm.submit()">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            添加用户
+          </a>
+          <a href="/index/yhym/">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            返回页面
+          </a>
+        </form>
+        <div class="err">
+        <span style="color: #03e9f4;font-size: 6pt;">{{ errMsg }}</span>
+        <!-- 上面这个是前端显示后端设置的验证码错误信息-->
+    </div> 
+      </div>
+</body>
+</html>

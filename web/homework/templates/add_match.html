@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ task.name }}任务添加匹配项</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.name_pattern.id_for_label }}">学号-姓名：</label><br>
+            {{ form.name_pattern }}
+            <small class="form-text text-muted">多个学号-姓名请用换行分隔</small>
+        </div>
+        <div class="form-group">
+            <label for="from_task_id">匹配项来源：</label>
+            <select name="from_task_id" id="from_task_id" class="form-control">
+                <option value="">请选择</option>
+                {% for t in tasks_with_matches %}
+                    {% if t.id != task.id %}
+                        <option value="{{ t.id }}">{{ t.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <small class="form-text text-muted">选择匹配项来源的任务，可以直接添加其匹配项</small>
+        </div>
+        <div class="form-group">
+            <label for="bulk_name_pattern">批量添加：</label><br>
+            <textarea name="bulk_name_pattern" id="bulk_name_pattern" class="form-control" rows="5" placeholder="例如：&#10;20230101-张三&#10;20230102-李四&#10;20210103-王五"></textarea>
+            <small class="form-text text-muted">多个学号-姓名请用换行分隔，每行一个</small>
+        </div>
+        <button type="submit" class="btn btn-primary">添加</button>
+        <a href="{% url 'list_tasks' %}" class="btn btn-primary">返回</a>
+    </form>
+    <hr>
+    <h2>已有匹配项</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="clear">
+        <button type="submit" class="btn btn-danger mb-3">清空匹配项</button>
+    </form>
+    {% if matches %}
+        <table class="table">
+            <thead class="text-center">
+                <tr>
+                    <th>序号</th>
+                    <th>信息</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% for match in matches %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ match.name_pattern }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="2">暂无匹配项</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>暂无匹配项</p>
+    {% endif %}
+</div>
+{% endblock %}

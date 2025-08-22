@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">验证您的邮箱</div>
+        <div class="card-body">
+          {% if messages %}
+          <div class="alert alert-info">
+            {% for message in messages %}
+            <div>{{ message }}</div>
+            {% endfor %}
+          </div>
+          {% endif %}
+          <div>我们已经向您的注册邮箱（{{email}}）发送了一封验证邮件。请在接下来的12小时内点击邮件中的链接进行确认，链接只能使用一次，请尽快操作。</div>
+          <div class="mt-4 text-right">
+            <a href="{% url 'forgot_password' %}" class="btn btn-secondary">返回</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

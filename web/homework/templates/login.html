@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/css/login.css">
+    <link rel="stylesheet" href="/static/css/tc.css">
+    <!-- 导入样式表 -->
+    <link rel="shortcut icon" href="/static/img/logo.ico">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一站式任务收集平台|Login</title>
+</head>
+<body>
+  {% if messages %}
+  <div style="text-align:center; padding:20px;">
+      {% for message in messages %}
+          <div class="alert alert-success" role="alert">{{ message }}</div>
+      {% endfor %}
+  </div>
+  {% endif %}
+    <div class="login-box">
+        <a>
+        <h2>一站式任务收集平台<h2>
+        </a>
+        <form method="post" action="#" id="loginForm">
+            {% csrf_token %}
+          <div class="user-box">
+            <input type="text" name="username" required="">
+            <label>用户名：</label>
+          </div>
+          <div class="user-box">
+            <input type="password" name="password" required="">
+            <label>密码：</label>
+          </div>
+          <div class="user-box">
+            <input type="text" name="vcode" required="">
+            <img src="/index/vcode/" alt="验证码" id="captcha-img">
+            <label>验证码：</label>
+          </div>
+          <a onclick="document:loginForm.submit()">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            登录
+          </a>
+          <a href="/index/zhmm/">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            找回密码
+          </a>
+        </form>
+        {% if view_msg %}
+          <div class="err">
+          <span style="color: #03e9f4;font-size: 6pt;">{{ view_msg }}</span>
+          <!-- 上面这个是前端显示后端设置的view_msg信息-->
+          </div> 
+      </div>
+      {% endif %}
+</body>
+</html>

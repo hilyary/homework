@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="text-center mb-5">{{ task_name }} 提交记录</h1>
+    <div class="text-center mb-4">
+      <a href="{% url 'rwlb' %}" class="btn btn-primary rounded-pill px-4 me-3">返回任务列表</a>
+      <a href="{% url 'check_submission' task_id=task_id %}" class="btn btn-primary rounded-pill px-4">查看未交列表</a>
+    </div>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      {% for record in records %}
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ record.student_name }}</h5>
+            <p class="card-text">学号：{{ record.xh }}</p>
+            <p class="card-text">提交时间：{{ record.modify_time }}</p>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">该任务还未有人提交</h5>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <nav aria-label="Page navigation" class="d-flex justify-content-center mt-5">
+      <ul class="pagination">
+        {% if records.has_previous %}
+        <li class="page-item">
+          <a class="page-link bg-primary text-white" href="?page=1" aria-label="First">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link bg-primary text-white" href="?page={{ records.previous_page_number }}" aria-label="Previous">
+            <span aria-hidden="true">&lsaquo;</span>
+          </a>
+        </li>
+        {% endif %}
+        <li class="page-item active">
+          <a class="page-link bg-primary text-white" href="?page={{ records.number }}">{{ records.number }}</a>
+        </li>
+        {% if records.has_next %}
+        <li class="page-item">
+          <a class="page-link bg-primary text-white" href="?page={{ records.next_page_number }}" aria-label="Next">
+            <span aria-hidden="true">&rsaquo;</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link bg-primary text-white" href="?page={{ records.paginator.num_pages }}" aria-label="Last">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    <div class="text-center mt-4">
+      <a href="{% url 'rwlb' %}" class="btn btn-primary rounded-pill px-4">返回列表</a>
+    </div>
+  </div>
+{% endblock %}

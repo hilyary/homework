@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2 class="text-center mb-4">当前正在编辑{{ form.username.value }}用户</h2>
+      <form method="post" class="form-horizontal bg-light p-3 rounded">
+        {% csrf_token %}
+        <div class="form-group">
+          <label class="col-form-label" for="username">用户名:</label>
+          <input type="text" class="form-control" id="username" name="username" value="{{ form.username.value }}" readonly>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label" for="email">邮箱:</label>
+          <input type="email" class="form-control" id="email" name="email" value="{{ form.email.value }}" readonly>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label" for="first_name">姓名:</label>
+          <input type="text" class="form-control" id="first_name" name="first_name" value="{{ form.first_name.value }}">
+        </div>
+        <div class="form-group">
+          <label class="col-form-label" for="last_name">个性签名:</label>
+          <input type="text" class="form-control" id="last_name" name="last_name" value="{{ form.last_name.value }}">
+        </div>
+        <div class="form-group">
+          <br>
+          <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary me-2">保存</button>
+            <a href="{% url 'yhym' %}" class="btn btn-primary">返回</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

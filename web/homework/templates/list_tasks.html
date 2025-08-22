@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-4">
+  <h2 class="mb-4 text-center">任务列表</h2>
+  <div class="mb-3 d-flex justify-content-center align-items-center">
+    <a href="{% url 'add_task' %}" class="btn btn-primary me-3 fs-6">创建任务</a>
+    <form action="" method="get" class="d-inline-flex align-items-center">
+      <input type="text" name="search_query" placeholder="搜索" class="form-control me-2 fs-6">
+      <input type="submit" value="查询" class="btn btn-primary me-3 fs-6">
+    </form>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col" class="fs-6 text-center">任务名字</th>
+        <th scope="col" class="fs-6 text-center">创建人</th>
+        <th scope="col" class="fs-6 text-center">创建时间</th>
+        <th scope="col" class="fs-6 text-center">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task in tasks %}
+      <tr>
+        <td class="fs-6 text-center">{{ task.name }}</td>
+        <td class="fs-6 text-center">{{ task.creator }}</td>
+        <td class="fs-6 text-center">{{ task.create_time }}</td>
+        <td class="text-center">
+          <a href="{% url 'upload_work_jilu' task.id %}" class="btn btn-primary me-2 fs-6">查看</a>
+          <a href="{% url 'edit_task' task_id=task.id %}" class="btn btn-warning me-2 fs-6">修改</a>
+          <a href="{% url 'delete_task' task_id=task.id %}" class="btn btn-danger me-2 fs-6" onclick="return confirm('确定要删除该任务吗？')">删除</a>
+          <a href="{% url 'upload_file' task_id=task.id %}" class="btn btn-success me-2 fs-6">上传</a>
+          <a href="{% url 'download_task' task_id=task.id %}" class="btn btn-secondary me-2 fs-6">下载</a>
+          <a href="{% url 'add_match' task.id %}" class="btn btn-info me-2 fs-6 text-white">设置</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-center">
+    {% if tasks.has_previous %}
+      <a href="?page=1" class="btn btn-outline-primary fs-6">&laquo; 第一页</a>
+      <a href="?page={{ tasks.previous_page_number }}" class="btn btn-outline-primary me-3 fs-6">上一页</a>
+    {% endif %}
+
+    <p class="my-auto fs-6">第{{ tasks.number }}页 共{{ tasks.paginator.num_pages }}页</p>
+
+    {% if tasks.has_next %}
+      <a href="?page={{ tasks.next_page_number }}" class="btn btn-outline-primary me-3 fs-6">下一页</a>
+      <a href="?page={{ tasks.paginator.num_pages }}" class="btn btn-outline-primary fs-6">&raquo; 最后一页</a>
+    {% endif %}
+  </div>
+
+  {% if success_message %}
+    <div class="alert alert-success my-4 fs-6 text-center" role="alert">
+      {{ success_message }}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

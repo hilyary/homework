@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-3">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>公告列表</h2>
+    <a href="{% url 'send_message' %}" class="btn btn-primary">发送公告</a>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="list-group">
+        {% for xiaoxi in xiaoxi %}
+        <div class="card mb-3">
+          <a href="#" class="list-group-item list-group-item-action xiaoxi-item text-center" data-title="{{ xiaoxi.title }}" data-date="{{ xiaoxi.date|date:'Y年m月d日 H:i:s' }}" data-sender="{{ xiaoxi.sender.username }}" data-content="{{ xiaoxi.content }}">
+            <div>
+              <h5 class="mb-1">
+                {{ xiaoxi.title }}
+                {% if xiaoxi.is_pinned %}
+                <span class="badge" style="background-color: yellow; color: black; position: absolute; right: 0; top: 0;">置顶</span>
+                {% endif %}
+              </h5>
+              <small>{{ xiaoxi.date|date:"Y年m月d日 H:i:s" }} by {{ xiaoxi.sender.username }}</small>
+            </div>
+          </a>
+          {% if user.is_staff %}  <!-- 如果当前用户是管理员，显示修改和删除按钮 -->
+          <div class="d-flex flex-wrap text-decoration-none justify-content-center p-3">
+            <a href="{% url 'toggle_pin_message' xiaoxi.id %}" class="btn btn-sm {% if xiaoxi.is_pinned %}btn-warning{% else %}btn-primary{% endif %} text-decoration-none">
+              {% if xiaoxi.is_pinned %}取消置顶{% else %}置顶{% endif %}
+            </a>
+            <a href="{% url 'edit_message' xiaoxi.id %}" class="btn btn-success btn-sm text-decoration-none">修改</a>
+            <a href="{% url 'delete_message' xiaoxi.id %}" class="btn btn-danger btn-sm text-decoration-none" onclick="return confirm('确定要删除这条公告吗？')">删除</a>
+          </div>
+          {% endif %}
+        </div>
+        {% empty %}
+        <div class="alert alert-info">
+          暂无公告
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header text-center">
+          <span id="xiaoxi-title">点击左侧公告列查看其内容</span>
+        </div>
+        <div class="card-body">
+            <p id="xiaoxi-content"></p>
+            <h6 class="card-subtitle text-muted" id="xiaoxi-info"></h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    window.onload = function() {
+      document.querySelectorAll('.xiaoxi-item').forEach(function(item) {
+        item.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.getElementById('xiaoxi-title').textContent = this.getAttribute('data-title');
+          document.getElementById('xiaoxi-content').innerHTML = this.getAttribute('data-content');
+    
+          var xiaoxiInfo = document.getElementById('xiaoxi-info');
+          xiaoxiInfo.innerHTML = '<div style="display: flex; flex-direction: column; align-items: center;"><div>by ' + this.getAttribute('data-sender') + '</div><div>' + this.getAttribute('data-date') + '</div></div>';
+          xiaoxiInfo.style.position = 'absolute';
+          xiaoxiInfo.style.bottom = '0';
+          xiaoxiInfo.style.right = '0';
+        });
+      });
+    }
+  </script>
+</div>
+{% endblock %}

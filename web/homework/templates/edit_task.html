@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-body">
+          <h1 class="mb-4">当前正在修改任务-{{ task.name }}</h1>
+          <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="task_name" class="form-label">任务名字:</label>
+              <input type="text" class="form-control" id="task_name" name="task_name" value="{{ task.name }}">
+            </div>
+            <div class="mb-3">
+              <label for="creator" class="form-label">创建人:</label>
+              <input type="text" class="form-control" id="creator" name="creator" value="{{ task.creator }}" readonly>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <a href="{% url 'rwlb' %}" class="btn btn-secondary me-md-3">返回</a>
+              <button type="submit" class="btn btn-primary">保存</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-3">
+  <h2>编辑公告</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="title">标题</label>
+      <input type="text" class="form-control" id="title" name="title" placeholder="请输入标题" value="{{ form.title.value|default:'' }}">
+      {% if form.title.errors %}
+        <div class="invalid-feedback">
+          {{ form.title.errors|join:", " }}
+        </div>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="content">内容</label>
+      <textarea class="form-control" id="content" name="content" rows="3">{{ form.content.value|default:'' }}</textarea>
+      {% if form.content.errors %}
+        <div class="invalid-feedback">
+          {{ form.content.errors|join:", " }}
+        </div>
+      {% endif %}
+    <br>
+    </div>
+    <button type="submit" class="btn btn-primary">更新公告</button>
+    <a href="{% url 'message_list' %}" class="btn btn-primary">返回公告列表</a>
+  </form>
+</div>
+<script src="/static/tinymce/tinymce.min.js"></script>
+<script>
+  tinymce.init({selector: "textarea"})
+</script>
+{% endblock %}
